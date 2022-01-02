@@ -6,4 +6,5 @@
 #include <stddef.h>
 #include <assert.h>
 
+#define DEBUG_EXECUTION_LOG
 #endif

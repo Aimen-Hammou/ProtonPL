@@ -1,3 +1,5 @@
+// Author: Aiman Hammou <developer.aiman@outlook.com>
+
 #include "Chunk.h"
 #include "Memory.h"
 

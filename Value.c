@@ -1,5 +1,4 @@
-// Author: Aiman Hammou
-// Date: 31 December 2021 Basic Implementation of ConstantPool and basic functions
+// Author: Aiman Hammou <developer.aiman@outlook.com>
 
 #include "Value.h"
 

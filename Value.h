@@ -1,10 +1,7 @@
 #ifndef PROTON_CONSTANT_POOL_H
 #define PROTON_CONSTANT_POOL_H
 
-// Author: Aiman Hammou
-// Date: 31 December 2021 Basic Implementation of ConstantPool and basic functions
-
-// Header file to manage the values declared inside Proton source code
+// Author: Aiman Hammou <developer.aiman@outlook.com>
 
 #include "Common.h"
 #include "Memory.h"

@@ -1,5 +1,13 @@
 ﻿  Chunk.c
   Debug.c
+  Memory.c
+c:\users\hammou\source\protonofficial\proton\proton\memory.c(8): warning C4013: 'free' undefined; assuming extern returning int
+c:\users\hammou\source\protonofficial\proton\proton\memory.c(12): warning C4013: 'realloc' undefined; assuming extern returning int
+c:\users\hammou\source\protonofficial\proton\proton\memory.c(12): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'int'
   Proton.c
-  Generazione del codice in corso...
+  Value.c
+c:\users\hammou\source\protonofficial\proton\proton\value.c(53): warning C4013: 'printf' undefined; assuming extern returning int
+  VirtualMachine.c
+  Generating Code...
+  LINK : C:\Users\Hammou\source\ProtonOfficial\Proton\Debug\Proton.exe not found or not built by the last incremental link; performing full link
   Proton.vcxproj -> C:\Users\Hammou\source\ProtonOfficial\Proton\Debug\Proton.exe

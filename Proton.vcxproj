@@ -156,6 +156,7 @@
     <ClCompile Include="Memory.c" />
     <ClCompile Include="Proton.c" />
     <ClCompile Include="Value.c" />
+    <ClCompile Include="VirtualMachine.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chunk.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Value.h" />
+    <ClInclude Include="VirtualMachine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

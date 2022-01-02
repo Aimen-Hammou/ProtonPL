@@ -1,6 +1,8 @@
 #ifndef PROTON_CHUNK_H
 #define PROTON_CHUNK_H
 
+// Author: Aiman Hammou <developer.aiman@outlook.com>
+
 #include "Common.h"
 #include "Value.h"
 

@@ -1,3 +1,5 @@
+// Author: Aiman Hammou <developer.aiman@outlook.com>
+
 #include "Debug.h"
 
 
@@ -55,12 +57,14 @@ int DisassembleInstruction(Chunk *pChunk, int iOffset) {
 
 	// Each instruction has his own printing function
 	switch(bInstruction){
-	case OP_RETURN:
-		return BasicInstruction("OP_RETURN", iOffset);
+		case OP_RETURN:
+			return BasicInstruction("OP_RETURN", iOffset);
+
 		case OP_CONSTANT:
-		return ConstantInstruction("OP_CONSTANT", pChunk, iOffset);
-	default:
-		printf("Unknown instruction at offset %04d\n", iOffset);
+			return ConstantInstruction("OP_CONSTANT", pChunk, iOffset);
+
+		default:
+			printf("Unknown instruction at offset %04d\n", iOffset);
 	} 
 
 	return (iOffset + 1);
