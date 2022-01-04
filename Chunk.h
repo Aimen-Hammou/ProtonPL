@@ -17,6 +17,16 @@ typedef enum {
 	// Ex: OP_CONSTANT, Index of the element inside constantPool dyn array
 	OP_CONSTANT,
 	
+	// ByteCode Operation to negate a value
+	// The element to be negate-d(?) has to be pushed before OP_NEGATE 
+	OP_NEGATE,
+
+	//Basic Math Operations
+	OP_ADD,
+	OP_SUBSTRACT,
+	OP_MULTIPLY,
+	OP_DIVIDE,
+
 	// ByteCode Operation to return from function
 	OP_RETURN
 }OpCode;

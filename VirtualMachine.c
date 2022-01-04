@@ -2,14 +2,27 @@
 
 // Author: Aiman Hammou <developer.aiman@outlook.com>
 
-
-//Static functions
-
-// This is so far ( 2 January 2022 ) the most important function in Proton
+//STATIC FUNCTION SECTION
 
 // Internal VM Helper Function that handles the interpretation of the bytecode source
 // and returns the result in term of interpretation (InterpreterResult)
-	
+
+static void ResetStack(){
+
+	//The top will now point to the first element so old values will be written
+	VM.StackTopPtr = VM.STACK; 
+}
+
+
+#define BINARY_OPERATION(operation) \
+		do{							\
+			Value b = Pop();		\
+			Value a = Pop();		\
+									\
+			Push(a operation b);	\
+		}while(0);					\
+		
+
 static InterpretResult Run() {
 
 	for (;;) {
@@ -18,7 +31,25 @@ static InterpretResult Run() {
 		int iConstantIdx = 0;
 
 		//if debug logging is actived print each instruction before executing it
+	
 #ifdef DEBUG_EXECUTION_LOG
+
+		// Stack Logging
+		printf("	");
+
+		// Iterate thru the stack
+		for (Value *StackIterator = VM.STACK; 
+			StackIterator < VM.StackTopPtr;
+			StackIterator++) {
+
+			printf("[ "); 
+			PrintValue(*StackIterator);
+			printf(" ]");
+		}
+
+		printf("\n");
+
+		//Instruction Logging
 		DisassembleInstruction(VM.chunk, (int)(VM.InstructionPointer - VM.chunk->code));
 #endif
 
@@ -26,7 +57,7 @@ static InterpretResult Run() {
 		// This operation is called DISPATCHING
 		//
 		// Get the current instruction and move the IP to the next one.
-		switch ((bCurrentInstruction = *VM.InstructionPointer++)) 
+		switch ((bCurrentInstruction = (*VM.InstructionPointer++))) 
 		{
 			case OP_CONSTANT:
 
@@ -35,9 +66,27 @@ static InterpretResult Run() {
 
 				Value vConstant = VM.chunk->constantPool.values[iConstantIdx];
 				
-				PrintValue(vConstant);
-				printf("\n");
+				Push(vConstant); 
 
+				break;
+
+			case OP_NEGATE:
+				// As mentioned in Chunk.h the value has to be already pushed in the stack
+				PrintValue(-Pop());
+				printf("\n");
+				break;
+			
+			case OP_ADD:
+				BINARY_OPERATION(+);
+				break;
+			case OP_SUBSTRACT:
+				BINARY_OPERATION(-);
+				break;
+			case OP_MULTIPLY:
+				BINARY_OPERATION(*);
+				break;
+			case OP_DIVIDE:
+				BINARY_OPERATION(/);
 				break;
 
 			case OP_RETURN:
@@ -46,8 +95,10 @@ static InterpretResult Run() {
 	}
 }
 
+// END OF STATIC FUNCTIONS SECTION
+
 void InitVM(){
-	;
+	ResetStack();
 }
 
 void FreeVM() {
@@ -70,4 +121,17 @@ InterpretResult Interpret(Chunk *pChunk) {
 	// Internal helper function that actually runs the chunk containing 
 	// the bytecode source and reports the InterpreterResult.
 	return Run();
+}
+
+
+void Push(Value value) {
+	*VM.StackTopPtr = value;
+	 VM.StackTopPtr++;
+}
+
+
+Value Pop(){
+	
+	VM.StackTopPtr--;
+	return *VM.StackTopPtr;
 }

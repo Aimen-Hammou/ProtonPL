@@ -7,4 +7,6 @@
 #include <assert.h>
 
 #define DEBUG_EXECUTION_LOG
+
+#define STACK_MAX 256
 #endif

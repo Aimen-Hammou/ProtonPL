@@ -59,9 +59,21 @@ int DisassembleInstruction(Chunk *pChunk, int iOffset) {
 	switch(bInstruction){
 		case OP_RETURN:
 			return BasicInstruction("OP_RETURN", iOffset);
-
+		
 		case OP_CONSTANT:
 			return ConstantInstruction("OP_CONSTANT", pChunk, iOffset);
+
+		case OP_NEGATE:
+			return BasicInstruction("OP_NEGATE", iOffset);
+
+		case OP_ADD:
+			return BasicInstruction("OP_ADD", iOffset);
+		case OP_SUBSTRACT:
+			return BasicInstruction("OP_SUBSTRACT", iOffset);
+		case OP_MULTIPLY:
+			return BasicInstruction("OP_MULTIPLY", iOffset);
+		case OP_DIVIDE:
+			return BasicInstruction("OP_DIVIDE", iOffset);
 
 		default:
 			printf("Unknown instruction at offset %04d\n", iOffset);
