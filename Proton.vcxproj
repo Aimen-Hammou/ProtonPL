@@ -89,7 +89,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -152,17 +152,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Chunk.c" />
+    <ClCompile Include="Compiler.c" />
     <ClCompile Include="Debug.c" />
     <ClCompile Include="Memory.c" />
     <ClCompile Include="Proton.c" />
+    <ClCompile Include="Scanner.c" />
     <ClCompile Include="Value.c" />
     <ClCompile Include="VirtualMachine.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="Compiler.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Memory.h" />
+    <ClInclude Include="Scanner.h" />
+    <ClInclude Include="Token.h" />
     <ClInclude Include="Value.h" />
     <ClInclude Include="VirtualMachine.h" />
   </ItemGroup>

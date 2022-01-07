@@ -60,9 +60,12 @@ void InitVM();
 // Function to free the memory allocated for certain member of the virtual machine
 void FreeVM();
 
-// Entry point of the VM which runs the bytecode and returns the InterpretResult
-InterpretResult Interpret(Chunk *pChunk);
-
+// Entry point of the VM which runs a string containing the source code 
+// and returns the InterpretResult.
+//
+// Since it does not have bytecode, we have to call the scanner and compiler.
+// So this function will be the entry point in the mainfile.
+InterpretResult Interpret(const char *source);
 
 // Stack operations
 

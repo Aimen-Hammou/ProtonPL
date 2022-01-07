@@ -1,4 +1,8 @@
-﻿  Debug.c
+﻿  Chunk.c
+  Debug.c
+  Memory.c
+  Proton.c
+  Value.c
   VirtualMachine.c
   Generating Code...
   Proton.vcxproj -> C:\Users\Hammou\source\ProtonOfficial\Proton\Debug\Proton.exe

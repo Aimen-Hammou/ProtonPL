@@ -1,4 +1,5 @@
 #include "VirtualMachine.h"
+#include "Compiler.h"
 
 // Author: Aiman Hammou <developer.aiman@outlook.com>
 
@@ -72,8 +73,7 @@ static InterpretResult Run() {
 
 			case OP_NEGATE:
 				// As mentioned in Chunk.h the value has to be already pushed in the stack
-				PrintValue(-Pop());
-				printf("\n");
+				Push(-Pop());
 				break;
 			
 			case OP_ADD:
@@ -105,24 +105,11 @@ void FreeVM() {
 	;
 }
 
-InterpretResult Interpret(Chunk *pChunk) {
 
-	// "Copy" the chunk into the VM.
-	VM.chunk = pChunk;
-
-	// Set the instruction pointer to the first element (op_code) of the chunk
-	//
-	// The InstructionPointer always points to the next instruction
-	// not the one being handled.
-	VM.InstructionPointer = VM.chunk->code;
-
-
-
-	// Internal helper function that actually runs the chunk containing 
-	// the bytecode source and reports the InterpreterResult.
-	return Run();
+InterpretResult Interpret(const char *source){
+	Compile(source);
+	return INTERPRET_OK;
 }
-
 
 void Push(Value value) {
 	*VM.StackTopPtr = value;

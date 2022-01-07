@@ -5,120 +5,80 @@
 
 // Author: Aiman Hammou <developer.aiman@outlook.com>
 
-void __FIRST_TEST()
-{
-	// Date: 31 December 2021
+// Static functions SECTION
 
-	//Create chunk
-	Chunk chunkObject;
+static void REPL() {
 
-	//Init the chunk
-	InitChunk(&chunkObject);
+	char line[1024];
+	for (;;) {
+		printf(">> ");
 
+		if (!fgets(line, sizeof(line), stdin)) {
+			printf("\n");
+			break;
+		}
+		Interpret(line);
+	}
 
-	// Add value to constant pool of chunk and get index
-	int iConstant = AddConstantPool(&chunkObject, 1.2);
-
-
-	//Write to the chunk the opcode
-	WriteToChunk(&chunkObject, OP_CONSTANT, 123);
-
-	//Write to the chunk the index of the constant
-	WriteToChunk(&chunkObject, iConstant, 123);
-
-	//Write to the chunk
-	WriteToChunk(&chunkObject, OP_RETURN, 123);
-
-	//Debug print of the chunk
-	DisassembleChunk(&chunkObject, "First Test");
-
-	//Free the chunk
-	FreeChunk(&chunkObject);
+	
 }
 
-void __SECOND_TEST()
-{
-	//Date: 02 January 2022: Added the VM to the example
 
+static char *ReadFile(const char *filePath) {
 
-	//Create chunk
-	Chunk chunkObject;
+	FILE *filePtr = fopen(filePath, "rb"); 
+	if (filePtr == NULL) {
+		fprintf(stderr, "Couldn't open the file: %s\n", filePath);
+		exit(74);
+	}
 
-	//Init the Virtual Machine and the chunk
-	InitVM();
-	InitChunk(&chunkObject);
+	//Get size of file content
+	fseek(filePtr, 0L, SEEK_END );
+	size_t fileSize = ftell(filePtr);
+	rewind(filePtr);
 
-
-	// Add value to constant pool of chunk and get index
-	int iConstant = AddConstantPool(&chunkObject, 1.2);
-
-
-	//Write to the chunk the opcode
-	WriteToChunk(&chunkObject, OP_CONSTANT, 123);
-
-	//Write to the chunk the index of the constant
-	WriteToChunk(&chunkObject, iConstant, 123);
-
-	//Write to the chunk
-	WriteToChunk(&chunkObject, OP_RETURN, 123);
-
-	//Debug print of the chunk
-	DisassembleChunk(&chunkObject, "Second Test");
-
-	// Vm executes the bytecode source code (entry point)
-	Interpret(&chunkObject);
-
-	//Free the VirtualMachine and the chunk
-	FreeVM();
-	FreeChunk(&chunkObject);
+	//Read content
+	char *fileBuffer = (char *)malloc(sizeof(char) * fileSize + 1);  assert(fileBuffer != NULL);
+	size_t numBytesRead = fread(fileBuffer, sizeof(char), fileSize, filePtr); assert(numBytesRead >= fileSize);
+	fileBuffer[numBytesRead] = '\0';
+	
+	fclose(filePtr);
+	return fileBuffer;
 }
 
-void __THIRD_TEST()
-{
-	//Date: 04 January 2022: Testing Stack and OP_NEGATE
+static void RunFile(const char *filePath) {
+
+	char *FileContent = ReadFile(filePath);
+
+	InterpretResult Result = Interpret(FileContent);
+
+	free(FileContent);
+
+	if (Result == INTERPRET_COMPILER_ERROR)
+		exit(65);
+	if (Result == INTERPRET_RUNTIME_ERROR)
+		exit(70);
 
 
-	//Create chunk
-	Chunk chunkObject;
-
-	//Init the Virtual Machine and the chunk
-	InitVM();
-	InitChunk(&chunkObject);
-
-
-	// Add value to constant pool of chunk and get index
-	int iConstant = AddConstantPool(&chunkObject, 1.2);
-	int iConstant2 = AddConstantPool(&chunkObject, 2.5);
-
-	//Write to the chunk the opcode
-	WriteToChunk(&chunkObject, OP_CONSTANT, 123);
-
-	//Write to the chunk the index of the constant
-	WriteToChunk(&chunkObject, iConstant, 123);
-
-	//Write to the chunk the opcode
-	WriteToChunk(&chunkObject, OP_CONSTANT, 123);
-
-	//Write to the chunk the index of the constant
-	WriteToChunk(&chunkObject, iConstant2, 123);
-
-	// Negate the value
-	WriteToChunk(&chunkObject, OP_ADD, 123);
-
-	//Write to the chunk
-	WriteToChunk(&chunkObject, OP_RETURN, 123);
-
-	// Vm executes the bytecode source code (entry point)
-	Interpret(&chunkObject);
-
-	//Free the VirtualMachine and the chunk
-	FreeVM();
-	FreeChunk(&chunkObject);
 }
+// End of Static functions SECTION
 
 int main(int argc, char *argv[]){
 	
-	__THIRD_TEST();
+	InitVM();
+
+	if (argc == 1) {
+		REPL();
+	}
+	else if (argc == 2) {
+		RunFile(argv[1]);
+	}
+	else {
+		fprintf(stderr, "Usage: proton [FILE PATH]\n");
+		exit(64);
+	}
+
+	FreeVM();
 
 	return 0;
 }

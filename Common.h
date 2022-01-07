@@ -5,6 +5,9 @@
 #include <stdint.h> // uint8_t
 #include <stddef.h>
 #include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define DEBUG_EXECUTION_LOG
 
