@@ -107,8 +107,23 @@ void FreeVM() {
 
 
 InterpretResult Interpret(const char *source){
-	Compile(source);
-	return INTERPRET_OK;
+	Chunk chunk;
+	InitChunk(&chunk);
+
+	if (!compile(source, &chunk))
+	{
+		FreeChunk(&chunk);
+		return INTERPRET_COMPILER_ERROR;
+	}
+
+	VM.chunk = &chunk;
+	VM.InstructionPointer = VM.chunk->code;
+
+	InterpretResult result = Run();
+
+	FreeChunk(&chunk);
+
+	return result;
 }
 
 void Push(Value value) {
